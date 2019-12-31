@@ -39,7 +39,7 @@ for line in range(number_of_lines):
 	x2 += random.randint(int(x1)+minlength,int(x1)+length)
 	y1 += prevy
 	y2 += random.randint(int(y1-(height/2)),int(y1)+height)
-	track.addLine(Line(0,id,x1,y1,x2,y2))
+	track.addLine(Line(0,identity,x1,y1,x2,y2))
 	#print(randnum)
 
 track.saveTrack(name)
