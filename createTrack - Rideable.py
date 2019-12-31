@@ -1,7 +1,21 @@
-import random, math, os, sys
+import random, math, os, sys, json, tkinter
+from track import *
+from line import *
+from tkinter import *
+from tkinter.filedialog import askdirectory
+#with open('settings.conf') as config:
+#    data = json.load(config)
+config = open("settings.conf", "r")
+config_data = config.read()
+#print(config_data)
+config.close()
+tk=Tk()
+tracks_dir = askdirectory(title='Please select the location of your LRA tracks folder')
+tk.destroy()
+os.chdir(tracks_dir)
+
 track_name = input("Please enter a track name: ")
 name = input("Please enter a save name: ")
-name += ".json"
 number_of_lines = int(input("Enter the number of lines to be Created: "))
 minlength = int(input("Enter minimum line length: "))
 length = int(input("Enter maximum line length: "))
@@ -14,35 +28,21 @@ except FileExistsError:
 
 os.chdir(track_name)
 x1,y1,x2,y2 = 0,0,0,0
-file = open(name, "w+")
-c = 0
-toWrite = ""
-toWrite += '{"label": "testData","startZoom": 2,"version": "6.2","startPosition": {"x": 0,"y": -5},"lines": null,"linesArray":['
-currentLine = ""
+identity = 0
+track = Track()
+track.setSpawn(0,-5)
 for line in range(number_of_lines):
-	currentLine = ""
-	currentLine += "["
-	c += 1
-	currentLine += f"0,"+str(c)+","
+	identity += 1
 	prevx,prevy = x2,y2
 	x1,y1,x2,y2 = 0,0,0,0
 	x1 += prevx
 	x2 += random.randint(int(x1)+minlength,int(x1)+length)
 	y1 += prevy
 	y2 += random.randint(int(y1-(height/2)),int(y1)+height)
-
+	track.addLine(Line(0,id,x1,y1,x2,y2))
 	#print(randnum)
-	currentLine += str(x1)+","+str(y1)+","+str(x2)+","+str(y2)+","
-	currentLine += "0,false],"
-	toWrite += currentLine
 
-toWrite = toWrite[:-1]
-toWrite += "]}"
-
-file.write(toWrite)
-
-file.close()
-
+track.saveTrack(name)
 print("Done!")
 #read = open(name, "r").read()
 

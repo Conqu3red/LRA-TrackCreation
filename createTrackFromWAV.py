@@ -1,7 +1,13 @@
-import random, math, os, sys
-
-
-
+import random, math, os, sys,json
+from track import *
+from line import *
+from tkinter import *
+from tkinter.filedialog import *
+tk=Tk()
+tracks_dir = askdirectory(title='Please select the location of your LRA tracks folder')
+wav_location = askopenfilename(title='Select a .wav file', filetypes = (("wav files","*.wav"),("all files","*.*")))
+tk.destroy()
+os.chdir(tracks_dir)
 """
 IMPORTANT
 json format (per line)
@@ -35,9 +41,8 @@ line len | speed (p/f)
 500        13.73
 1000       19.51
 """
-path = input("Please enter the path of your wav file: ")
 import soundfile as sf
-data, samplerate = sf.read(path)
+data, samplerate = sf.read(wav_location)
 channels = 2
 try:
 	print(len(data[0]))
@@ -47,7 +52,6 @@ except:
 #print(channels)
 track_name = input("Please enter a track name: ")
 name = input("Please enter a save name: ")
-name += ".json"
 #number_of_lines = int(input("Enter the number of lines to be Created: "))
 #minlength = int(input("Enter minimum line length: "))
 #length = int(input("Enter maximum line length: "))
@@ -63,15 +67,9 @@ if channels == 1:
 	x1,y1,x2,y2 = 0,0,0,(data[0])*200
 elif channels == 2:
 	x1,y1,x2,y2 = 0,0,0,(data[0][0])*200
-file = open(name, "w+")
-toWrite = ""
-toWrite += '{"label": "testData","startZoom": 1.4,"version": "6.2","startPosition": {"x": -6700,"y": -5},"lines": null,"linesArray":['
-currentLine = ""
+
+track = Track()
 for c,line in enumerate(data):
-	currentLine = ""
-	currentLine += "["
-	#c += 1
-	currentLine += f"2,"+str(c)+","
 	prevx,prevy = x2,y2
 	x1,y1,x2,y2 = 0,0,0,0
 	x1 += prevx
@@ -83,19 +81,13 @@ for c,line in enumerate(data):
 		y2 += ((line[0]+line[1])/2)*200
 
 	#print(randnum)
-	currentLine += str(x1)+","+str(y1)+","+str(x2)+","+str(y2)+","
-	currentLine += "0,false],"
-	toWrite += currentLine
-toWrite += "[0,"+str(len(data))+"0,0,0,"+str(len(data))+",0,false],"
-toWrite += "[1,"+str(len(data)+1)+",-6700,0,0,0,0,false]"
-
+	track.addLine(Line(2,c,x1,y1,x2,y2))
+track.addLine(Line(0,len(data),0,0,len(data),0))
+track.addLine(Line(1,len(data)+1,-6700,0,0,0))
+track.setSpawn(-6700,-5)
 #toWrite = toWrite[:-1]
-toWrite += "]}"
 
-file.write(toWrite)
-
-file.close()
-
+track.saveTrack(name)
 print("Done!")
 #read = open(name, "r").read()
 
