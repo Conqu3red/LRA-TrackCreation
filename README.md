@@ -3,6 +3,10 @@ A group of python tools for generating LRA tracks (currently creates .json track
 
 All python files msut be extracted into your LRA/Tracks folder
 
+# Requirements
+This only works on windows
+Python 3 (Ideally 3.7)
+Also Requires Tkinter
 
 # Thanks
 
