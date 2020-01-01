@@ -36,6 +36,7 @@ class Track:
                         done += 1
                         
                         if done == needed:
+                                print("Break")
                                 break
 
         def saveTrack(self,name):
