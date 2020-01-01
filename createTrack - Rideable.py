@@ -5,10 +5,7 @@ from tkinter import *
 from tkinter.filedialog import askdirectory
 #with open('settings.conf') as config:
 #    data = json.load(config)
-config = open("settings.conf", "r")
-config_data = config.read()
-#print(config_data)
-config.close()
+
 tk=Tk()
 tracks_dir = askdirectory(title='Please select the location of your LRA tracks folder')
 tk.destroy()
@@ -39,7 +36,7 @@ for line in range(number_of_lines):
 	x2 += random.randint(int(x1)+minlength,int(x1)+length)
 	y1 += prevy
 	y2 += random.randint(int(y1-(height/2)),int(y1)+height)
-	track.addLine(Line(0,identity,x1,y1,x2,y2))
+	track.addLine(Line(0,identity,x1,y1,x2,y2,0,False))
 	#print(randnum)
 
 track.saveTrack(name)
