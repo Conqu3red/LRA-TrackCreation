@@ -70,7 +70,8 @@ elif channels == 2:
 	x1,y1,x2,y2 = 0,0,0,(data[0][0])*200
 
 track = Track()
-for c,line in enumerate(data):
+c = 0
+for a,line in enumerate(data):
 	prevx,prevy = x2,y2
 	x1,y1,x2,y2 = 0,0,0,0
 	x1 += prevx
@@ -83,13 +84,14 @@ for c,line in enumerate(data):
 
 	#print(randnum)
 	track.addLine(Line(2,c,x1,y1,x2,y2,0,False))
-track.addLine(Line(0,len(data),0,0,len(data),0))
+	c += 1
+track.addLine(Line(0,len(data),0,0,len(data),0,0,False))
 speedup_distance = 0.44
 #start_speed = 0.44
 #while speedup_distance < bitrate:
 #	speedup
 
-track.addLine(Line(1,len(data)+1,-6700,0,0,0))
+track.addLine(Line(1,len(data)+1,-6700,0,0,0,0,False))
 track.setSpawn(-6700,-5)
 #toWrite = toWrite[:-1]
 
