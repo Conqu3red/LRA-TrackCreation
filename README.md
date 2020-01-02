@@ -12,4 +12,4 @@ Thanks to [OllieMBM](https://github.com/OllieMBM) for writing a majority of the 
 
 # Future Plans
     Add a .conf file which stores your LRA/Tracks folder location.
-    add a mode which generates a track based on lots of pre-defined sections or obsticales.
+    add a mode which generates a track based on lots of pre-defined sections or obsticales. ✓
