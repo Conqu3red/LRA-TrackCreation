@@ -51,7 +51,8 @@ start = (0,0)
 end = (0,0)
 lines_added = 0
 this_loop_lines = []
-for i in range(4):
+iterations = int(input("Enter the number of templates to be joined: "))
+for i in range(iterations):
 	choice = random.choice(list(templates.keys()))
 	print("Chosen "+str(choice))
 	#print(choice)
@@ -74,7 +75,8 @@ for i in range(4):
 		line[1] = lines_added
 		mainTrack.addLine(Line(*line))
 		this_loop_lines.append(line)
-	end = (line[4],line[5])
+	end = getStartEnd(this_loop_lines)
+	end = (end[1][0],end[1][1])
 	print("END: "+ str(end))
 os.chdir(tracks_dir)
 track_name = input("Enter a track name: ")
